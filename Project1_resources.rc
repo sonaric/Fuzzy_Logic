@@ -1,0 +1,6 @@
+JpgImage_1 BITMAP "Win32\\Debug\\gp.jpg"
+JpgImage_2 BITMAP "Win32\\Debug\\lr1.jpg"
+JpgImage_3 BITMAP "Win32\\Debug\\lr2.jpg"
+JpgImage_4 BITMAP "Win32\\Debug\\mr.jpg"
+JpgImage_5 BITMAP "Win32\\Debug\\ulcc.jpg"
+JpgImage_6 BITMAP "Win32\\Debug\\vlcc.jpg"

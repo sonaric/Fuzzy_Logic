@@ -1,0 +1,381 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#include <cstdlib>
+#include <ctime>
+#pragma hdrstop
+
+#include "Unit1.h"
+#include <jpeg.hpp>
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+void DrawGrath(int a1, int a2, int a3, const int b1=-1, const int b2=-1, const int b3=-1);
+void drawShip(int a1, int a2, int a3);
+int a_1, a_2, a_3, b_1, b_2, b_3, c_1, c_2, c_3, gr_pos=0;
+int **data;
+int size_data_mas=1;
+int bunker_vol=0, cont_bunk=1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+	//srand( time(NULL) );
+	Panel3->Color=RGB(255,215,0);
+	Panel4->Visible=false;
+}
+void DrawGrath(int a1, int a2, int a3, int b1, int b2, int b3)
+{
+
+	int x_0=50;
+	int y_0=Form1->Image2->Height-50;
+	double x_unit=(double)(Form1->Image2->Width-100)/bunker_vol;
+	Form1->Image2->Canvas->Rectangle(0,0,Form1->Image2->Width,Form1->Image2->Height);
+	Form1->Image2->Canvas->MoveTo(x_0,y_0);
+	Form1->Image2->Canvas->LineTo(x_0,50);
+	Form1->Image2->Canvas->Pen->Style=psDash;
+	Form1->Image2->Canvas->LineTo(Form1->Image2->Width-50,50);
+	Form1->Image2->Canvas->Pen->Style=psSolid;
+	Form1->Image2->Canvas->MoveTo(x_0,y_0);
+	Form1->Image2->Canvas->LineTo(Form1->Image2->Width-50,y_0);
+	Form1->Image2->Canvas->Pen->Width=2;
+	Form1->Image2->Canvas->Pen->Color=clBlue;
+	Form1->Image2->Canvas->MoveTo(x_0+(x_unit*a1),y_0);
+	Form1->Image2->Canvas->LineTo(x_0+(x_unit*a2),y_0-100);
+	Form1->Image2->Canvas->LineTo(x_0+(x_unit*a3),y_0);
+	if(b1!=-1)
+	{
+		Form1->Image2->Canvas->Pen->Color=clRed;
+		Form1->Image2->Canvas->MoveTo(x_0+(x_unit*b1),y_0);
+		Form1->Image2->Canvas->LineTo(x_0+(x_unit*b2),y_0-100);
+		Form1->Image2->Canvas->LineTo(x_0+(x_unit*b3),y_0);
+	}
+	Form1->Image2->Canvas->Pen->Width=0;
+	Form1->Image2->Canvas->Pen->Color=clBlack;
+
+
+}
+void DrawRes(int c1, int c2, int c3)
+{
+	int x_0=50;
+	int y_0=Form1->Image2->Height-50;
+	double x_unit=(double)(Form1->Image2->Width-100)/bunker_vol;
+
+	Form1->Image2->Canvas->Pen->Width=2;
+	Form1->Image2->Canvas->Pen->Color=clGreen;
+	Form1->Image2->Canvas->MoveTo(x_0+(x_unit*c1),y_0);
+	Form1->Image2->Canvas->LineTo(x_0+(x_unit*c2),y_0-100);
+	Form1->Image2->Canvas->LineTo(x_0+(x_unit*c3),y_0);
+
+	Form1->Image2->Canvas->Pen->Width=0;
+	Form1->Image2->Canvas->Pen->Color=clBlack;
+}
+void calcRes()
+{
+	int l_part_1=a_2-a_1+b_3-b_2;
+	int l_part_2=a_1-b_3;
+	int r_part_1=a_3-b_1;
+	int r_part_2=a_3-a_2+b_2-b_1;
+	c_1=l_part_2;
+	c_3=r_part_1;
+	c_2=l_part_1+l_part_2;
+}
+
+int** sendToMas()
+{
+	size_data_mas++;
+	int **mas;
+	mas=new int*[size_data_mas];
+	for(int i=0; i<size_data_mas;i++)
+	{
+		mas[i]=new int[9];
+	}
+	if((size_data_mas-1)>1)
+	for(int i=0; i<size_data_mas-1;i++)
+	{
+		for(int j=0; j<9; j++)
+		{
+			mas[i][j]=data[i][j];
+		}
+	}
+	mas[size_data_mas-1][0]=a_1;
+	mas[size_data_mas-1][1]=a_2;
+	mas[size_data_mas-1][2]=a_3;
+	mas[size_data_mas-1][3]=b_1;
+	mas[size_data_mas-1][4]=b_2;
+	mas[size_data_mas-1][5]=b_3;
+	mas[size_data_mas-1][6]=c_1;
+	mas[size_data_mas-1][7]=c_2;
+	mas[size_data_mas-1][8]=c_3;
+	a_1=c_1;
+	a_2=c_2;
+	a_3=c_3;
+
+	return mas;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+	if(StrToInt(Edit2->Text)<1000 || StrToInt(Edit2->Text)>550000)
+		ShowMessage("Вантажомісткість не допустима!");
+	else
+	{
+		Panel2->BringToFront();
+		bunker_vol=StrToInt(Edit2->Text);
+		a_1=a_2=a_3=StrToInt(Edit2->Text);
+		cont_bunk=StrToInt(Edit2->Text);
+		DrawGrath(a_1,a_2,a_3);
+		if(Edit1->Text!="")
+			Caption="\""+Edit1->Text+"\"";
+		Label2->Caption="Кількість палива на танкері: "+FloatToStr(a_1);
+		drawShip(a_1, a_2, a_3);
+	}
+
+
+
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ComboBox1Change(TObject *Sender)
+{
+   switch(ComboBox1->ItemIndex)
+   {
+	case 0:
+	{
+		Image1->Picture->LoadFromFile("gp.jpg");
+		break;
+	}
+	case 1:
+	{
+		Image1->Picture->LoadFromFile("mr.jpg");
+		break;
+	}
+	case 2:
+	{
+		Image1->Picture->LoadFromFile("lr1.jpg");
+		break;
+	}
+	case 3:
+	{
+		Image1->Picture->LoadFromFile("lr2.jpg");
+		break;
+	}
+	case 4:
+	{
+		Image1->Picture->LoadFromFile("vlcc.jpg");
+		break;
+	}
+		case 5:
+	{
+		Image1->Picture->LoadFromFile("ulcc.jpg");
+		break;
+	}
+   }
+}
+//---------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::RadioGroup1Click(TObject *Sender)
+{
+	if(RadioGroup1->ItemIndex==1)
+	{
+	   Button2->Top=79;
+	   Panel4->Visible=false;
+	}else
+	{
+	   Button2->Top=197;
+	   Panel4->Visible=true;
+    }
+}
+
+void drawShip(int a1, int a2, int a3)
+{
+	int x_max=Form1->Image4->Width;
+	int y_max=Form1->Image4->Height;
+	double x_un=(double)y_max/(double)cont_bunk;
+	Form1->Image3->Picture->LoadFromFile("3.jpg");
+	if(a1==a2 && a1==a3)
+	{
+		Form1->Image4->Canvas->Brush->Color=clGreen;
+		Form1->Image4->Canvas->Rectangle(0,0,x_max,y_max);
+	}else{
+		Form1->Image4->Canvas->Brush->Color=clWhite;
+		Form1->Image4->Canvas->Pen->Color=clWhite;
+		Form1->Image4->Canvas->Rectangle(0,0,x_max,y_max-(x_un*a3));
+		Form1->Image4->Canvas->Brush->Color=clRed;
+		Form1->Image4->Canvas->Pen->Color=clRed;
+		Form1->Image4->Canvas->Rectangle(0,y_max-(x_un*a3),x_max,y_max-(x_un*a2));
+		Form1->Image4->Canvas->Brush->Color=clYellow;
+		Form1->Image4->Canvas->Pen->Color=clYellow;
+		Form1->Image4->Canvas->Rectangle(0,y_max-(x_un*a2),x_max,y_max-(x_un*a1));
+		Form1->Image4->Canvas->Brush->Color=clGreen;
+		Form1->Image4->Canvas->Pen->Color=clGreen;
+		Form1->Image4->Canvas->Rectangle(0,y_max-(x_un*a1),x_max,y_max);
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+	if(RadioGroup1->ItemIndex==0)
+	{
+	  b_1=StrToInt(Edit3->Text);
+	  b_2=StrToInt(Edit4->Text);
+	  b_3=StrToInt(Edit5->Text);
+	  if(b_1>b_2 || b_1>b_3 || b_2>b_3)
+	  {
+		MessageBeep(MB_ICONEXCLAMATION);
+		ShowMessage("Не вірний формат трикутного числа!");
+		return;
+	  }
+	  if(b_3<a_1)
+	  {
+		  MediaPlayer1->FileName = "2.mp3";
+		  MediaPlayer1->Open();
+		  MediaPlayer1->Play();
+		  calcRes();
+		  DrawGrath(a_1,a_2,a_3,b_1,b_2,b_3);
+		  DrawRes(c_1,c_2,c_3);
+		  data=sendToMas();
+		  gr_pos++;
+		  drawShip(a_1, a_2, a_3);
+	  }else{
+	     MessageBeep(MB_ICONEXCLAMATION);
+         ShowMessage("Не можливо виконати замовлення!");
+		 DrawGrath(a_1,a_2,a_3,b_1,b_2,b_3);
+      }
+
+	}else
+	{
+		srand( time(0) );
+		 b_1=(50+(rand()%10));
+		 while(b_1>b_2)
+		 {
+			srand( time(0) );
+			b_2=(60+(rand()%20));
+		 }
+		 while(b_2>b_3)
+		 {
+		 	srand( time(0) );
+			b_3=(80+(rand()%20));
+		 }
+		 if(b_3<a_1)
+		 {
+			 MediaPlayer1->FileName = "3.mp3";
+			 MediaPlayer1->Open();
+			 MediaPlayer1->Play();
+			 calcRes();
+			 DrawGrath(a_1,a_2,a_3,b_1,b_2,b_3);
+			 DrawRes(c_1,c_2,c_3);
+			 data=sendToMas();
+			 gr_pos++;
+			 drawShip(a_1, a_2, a_3);
+		 }else
+		 {
+			ShowMessage("Не можливо виконати замовлення!");
+			DrawGrath(a_1,a_2,a_3,b_1,b_2,b_3);
+         }
+	}
+	bunker_vol=a_3;
+	if(a_1!=a_2 && a_1!=a_3)
+	{
+		Label2->Caption="Кількість палива на танкері: [ "+FloatToStr(a_1)+"; "+FloatToStr(a_2)+"; "+FloatToStr(a_3)+" ]";
+	}
+	else
+	{
+	   Label2->Caption="Кількість палива на танкері: "+FloatToStr(a_1);
+	}
+	Label3->Caption="Замовлення порту: [ "+FloatToStr(b_1)+"; "+FloatToStr(b_2)+"; "+FloatToStr(b_3)+" ]";
+	Label4->Caption="Залишок топлива: [ "+FloatToStr(c_1)+"; "+FloatToStr(c_2)+"; "+FloatToStr(c_3)+" ]";
+    drawShip(a_1, a_2, a_3);
+	}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button3Click(TObject *Sender)
+{
+	if(gr_pos>1)
+	{
+	 gr_pos--;
+	 Button4->Enabled=true;
+	 bunker_vol=data[gr_pos][2];
+	 DrawGrath(data[gr_pos][0],data[gr_pos][1],data[gr_pos][2],data[gr_pos][3],data[gr_pos][4],data[gr_pos][5]);
+	 DrawRes(data[gr_pos][6],data[gr_pos][7],data[gr_pos][8]);
+	 drawShip(data[gr_pos][0],data[gr_pos][1],data[gr_pos][2]);
+	 if(a_1!=a_2 && a_1!=a_3)
+	{
+		Label2->Caption="Кількість палива на танкері: [ "+FloatToStr(data[gr_pos][0])+"; "+FloatToStr(data[gr_pos][1])+"; "+FloatToStr(data[gr_pos][3])+" ]";
+	}
+	else
+	{
+	   Label2->Caption="Кількість палива на танкері: "+FloatToStr(data[gr_pos][0]);
+	}
+	Label3->Caption="Замовлення порту: [ "+FloatToStr(data[gr_pos][3])+"; "+FloatToStr(data[gr_pos][4])+"; "+FloatToStr(data[gr_pos][5])+" ]";
+	Label4->Caption="Залишок топлива: [ "+FloatToStr(data[gr_pos][6])+"; "+FloatToStr(data[gr_pos][7])+"; "+FloatToStr(data[gr_pos][8])+" ]";
+	}else
+	{
+		Button3->Enabled=false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button4Click(TObject *Sender)
+{
+   if(gr_pos<size_data_mas-1)
+	{
+	 gr_pos++;
+	 Button3->Enabled=true;
+	 bunker_vol=data[gr_pos][2];
+	 DrawGrath(data[gr_pos][0],data[gr_pos][1],data[gr_pos][2],data[gr_pos][3],data[gr_pos][4],data[gr_pos][5]);
+	 DrawRes(data[gr_pos][6],data[gr_pos][7],data[gr_pos][8]);
+	 drawShip(data[gr_pos][0],data[gr_pos][1],data[gr_pos][2]);
+	 if(a_1!=a_2 && a_1!=a_3)
+	{
+		Label2->Caption="Кількість палива на танкері: [ "+FloatToStr(data[gr_pos][0])+"; "+FloatToStr(data[gr_pos][1])+"; "+FloatToStr(data[gr_pos][3])+" ]";
+	}
+	else
+	{
+	   Label2->Caption="Кількість палива на танкері: "+FloatToStr(data[gr_pos][0]);
+	}
+	Label3->Caption="Замовлення порту: [ "+FloatToStr(data[gr_pos][3])+"; "+FloatToStr(data[gr_pos][4])+"; "+FloatToStr(data[gr_pos][5])+" ]";
+	Label4->Caption="Залишок топлива: [ "+FloatToStr(data[gr_pos][6])+"; "+FloatToStr(data[gr_pos][7])+"; "+FloatToStr(data[gr_pos][8])+" ]";
+	}else
+	{
+		Button4->Enabled=false;
+	}
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::CheckBox1Click(TObject *Sender)
+{
+	if(CheckBox1->Checked)
+	{
+		Edit6->Visible=true;
+		Edit7->Visible=true;
+		Edit8->Visible=true;
+	}else
+	{
+		Edit6->Visible=false;
+		Edit7->Visible=false;
+		Edit8->Visible=false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button5Click(TObject *Sender)
+{
+	Panel1->BringToFront();
+	size_data_mas=0;
+	sendToMas();
+	Label3->Caption="";
+	Label4->Caption="";
+
+}
+//---------------------------------------------------------------------------
+

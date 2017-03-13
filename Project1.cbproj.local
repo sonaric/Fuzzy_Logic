@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.375,=C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\gp.jpg</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.412,=C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\ulcc.jpg</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.619,C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\ulcc.jpg=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.395,=C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\lr2.jpg</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.342,C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Unit1.h=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\MMN_LR4\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.219,C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\gp.jpg=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.421,=C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\vlcc.jpg</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.403,=C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\mr.jpg</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.779,C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\mr.jpg=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.342,C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\MMN_LR4\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.427,C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Project1.cbproj=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\MMN_LR4\Project1.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.843,C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\vlcc.jpg=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.333,C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\lr2.jpg=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.540,C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Project1PCH1.h=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\MMN_LR4\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.667,=C:\Users\Stanislav\Desktop\завантаження.jpg</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.369,C:\Users\Stanislav\Desktop\завантаження.jpg=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.734,=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.708,=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.318,=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.342,C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Unit1.cpp=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\MMN_LR4\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.387,=C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\lr1.jpg</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.731,C:\Users\Svitlana\Desktop\MMN_LR4\Win32\Debug\lr1.jpg=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.333,=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.750,=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.726,=C:\Users\Stanislav\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+  </Transactions>
+</BorlandProject>
